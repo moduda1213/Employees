@@ -10,9 +10,16 @@
 <body>
 	<%
 		int currentPage = 1;
+		String deptName = null;//입력값 가져오기
+		
 		if(request.getParameter("currentPage") != null){
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
+		
+		if(request.getParameter("deptName") != null){
+			deptName = request.getParameter("deptName");
+		}
+		
 		int rowPerPage = 10;
 		Class.forName("org.mariadb.jdbc.Driver");
 		
@@ -20,11 +27,28 @@
 				"jdbc:mariadb://127.0.0.1:3306/employees",
 				"root",
 				"java1004");
-		String sql = "select * from departments order by dept_no desc limit ?,?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, (currentPage-1)*rowPerPage);
-		stmt.setInt(2, rowPerPage);
+		
+		
+		
+		
+		PreparedStatement stmt= null;
+		
+		if(deptName != null){
+			String sql = "select * from departments where dept_name LIKE ? limit ?,?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1,"%"+deptName+"%");
+			stmt.setInt(2, (currentPage-1)*rowPerPage);
+			stmt.setInt(3, rowPerPage);
+		}else{
+			String sql = "select * from departments order by dept_no desc limit ?,?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, (currentPage-1)*rowPerPage);
+			stmt.setInt(2, rowPerPage);
+		}
+		
 		ResultSet rs = stmt.executeQuery();
+		
+	
 		
 	%>
 	<h1>departmentsList</h1>
@@ -38,6 +62,7 @@
 			<li><a href ="titlesList.jsp">titlesList</a></li>
 		</ul>
 	</div>
+	
 	<table border = "1">
 		<thead>
 			<tr>
@@ -90,7 +115,14 @@
 		<%
 			}
 		%>
-		
 	</div>
+	
+		<div>&nbsp;</div>
+		<div>
+			<form method="post" action="./departmentsList.jsp">
+				부서이름<input type = "text" name = "deptName">
+				<button type ="submit">검색</button>
+			</form>
+		</div>
 </body>
 </html>

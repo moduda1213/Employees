@@ -19,6 +19,7 @@
 		
 		//firstName
 		String searchFirstName = ""; // 이름
+		
 		if(request.getParameter("searchFirstName") != null){
 			searchFirstName = request.getParameter("searchFirstName");
 		}

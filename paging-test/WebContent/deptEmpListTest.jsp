@@ -10,7 +10,7 @@
 <body>
 	<%
 		request.setCharacterEncoding("utf-8");
-		
+	
 		int currentPage = 1; //currentPage가 넘어오지 않으면 1
 		if(request.getParameter("currentPage") != null){//currentPage가 넘어오면 대체하겠다
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -129,18 +129,8 @@
 		ResultSet rs2 = stmt2.executeQuery();
 		
 	%>
-	<h1>deptEmpList</h1>
-	<div>
-		<ul>
-			<li><a href ="departmentsList.jsp">departmentsList</a></li>
-			<li><a>deptEmpList</a></li>
-			<li><a href ="deptManagerList.jsp">deptManagerList</a></li>
-			<li><a href ="employeesList.jsp">employeesList</a></li>
-			<li><a href ="salariesList.jsp">salariesList</a></li>
-			<li><a href ="titlesList.jsp">titlesList</a></li>
-		</ul>
-	</div>
-	<form action="./deptEmpListTest.jsp">
+	
+	<form action="./deptEmpList.jsp">
 	
 		<%
 			if(ck.equals("")){ //체크 누른 후 검색하면 유지될 수 있도록
@@ -198,16 +188,16 @@
 			<%
 				if(currentPage>1){
 			%>
-					<td><a href="./deptEmpList.jsp?currentPage=1&deptNo=<%=deptNo%>&ck=<%=ck%>">처음으로</a></td>
-					<td><a href="./deptEmpList.jsp?currentPage=<%=currentPage-1%>&deptNo=<%=deptNo%>&ck=<%=ck%>">이전</a></td>
+					<td><a href="./deptEmpListTest.jsp?currentPage=1&deptNo=<%=deptNo%>&ck=<%=ck%>">처음으로</a></td>
+					<td><a href="./deptEmpListTest.jsp?currentPage=<%=currentPage-1%>&deptNo=<%=deptNo%>&ck=<%=ck%>">이전</a></td>
 			<%
 				}
 			%>
 			<%
 				if(currentPage < lastPage){
 			%>
-					<td><a href="./deptEmpList.jsp?currentPage=<%=currentPage+1%>&deptNo=<%=deptNo%>&ck=<%=ck%>">다음</a></td>
-					<td><a href="./deptEmpList.jsp?currentPage=<%=lastPage%>&deptNo=<%=deptNo%>&ck=<%=ck%>">마지막으로</a></td>
+					<td><a href="./deptEmpListTest.jsp?currentPage=<%=currentPage+1%>&deptNo=<%=deptNo%>&ck=<%=ck%>">다음</a></td>
+					<td><a href="./deptEmpListTest.jsp?currentPage=<%=lastPage%>&deptNo=<%=deptNo%>&ck=<%=ck%>">마지막으로</a></td>
 			<%
 				}
 			%>
